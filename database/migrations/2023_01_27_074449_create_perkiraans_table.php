@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('perkiraans', function (Blueprint $table) {
             $table->id();
+            $table->string('kodeperkiraan')->unique();
+            $table->string('namaperkiraan');
+            $table->enum('jenisperkiraan',  ['Debit', 'Kredit'])->default('Debit');
             $table->timestamps();
         });
     }
