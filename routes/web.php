@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PerkiraanController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('kodeperkiraan/{dataperkiraan}', [PerkiraanController::class, 'update'])->name('UpdateKodeperkiraan');
 
     //PUNYA KODE TRANSAKSI
-    Route::get('transaksi', [PerkiraanController::class, 'index'])->name('IndexTransaksi');
-    Route::post('transaksi', [PerkiraanController::class, 'store'])->name('StoreTransaksi');
-    Route::delete('transaksi/{perkiraan}', [PerkiraanController::class, 'destroy'])->name('DestroyTransaksi');
-    Route::get('transaksi/{perkiraan}/edit', [PerkiraanController::class, 'edit'])->name('EditTransaksi');
-    Route::patch('transaksi/{dataperkiraan}', [PerkiraanController::class, 'update'])->name('UpdateTransaksi');
+    Route::get('transaksi', [TransaksiController::class, 'index'])->name('IndexTransaksi');
+    Route::post('transaksi', [TransaksiController::class, 'store'])->name('StoreTransaksi');
+    Route::delete('transaksi/{datatransaksi}', [TransaksiController::class, 'destroy'])->name('DestroyTransaksi');
+    Route::get('transaksi/{datatransaksi}/edit', [TransaksiController::class, 'edit'])->name('EditTransaksi');
+    Route::patch('transaksi/{datatransaksi}', [TransaksiController::class, 'update'])->name('UpdateTransaksi');
 });
 
 Route::middleware('auth')->group(function () {

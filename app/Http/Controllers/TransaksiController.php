@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perkiraan;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class TransaksiController extends Controller
 {
@@ -14,7 +17,12 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $perkiraans = Perkiraan::all();
+        $code = 'T' . date('ym') . rand(1111, 9999);
+        return view('transaksi.index', [
+            'perkiraans' => $perkiraans,
+            'code' => $code,
+        ]);
     }
 
     /**
@@ -35,7 +43,51 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // $request->validate([
+            //     'kodetransaksi' => ['required', 'min:8', 'max:8'],
+            //     'tanggaltransaksi' => 'required',
+            //     'kdperkiraan' => 'required',
+            //     'keterangan ' => 'required',
+            //     'nominal ' => 'required',
+            // ]);
+
+            $pilihan = $request->kdperkiraan;
+            $jenisold = Perkiraan::where('kodeperkiraan', $pilihan)
+                ->select('jenisperkiraan')
+                ->get();
+
+            foreach ($jenisold as $value) {
+                $jenisnew = $value->jenisperkiraan;
+            }
+            // dd($request->nominal);
+        
+            if($jenisnew == 'Debit'){
+                DB::table('transaksis')->insert([
+                    'kodetransaksi' => $request->kodetransaksi,
+                    'tanggaltransaksi' => $request->tanggaltransaksi,
+                    'kdperkiraan' => $request->kdperkiraan,
+                    'keterangan' => $request->keterangan,
+                    'transaksidebit' => $request->nominal,
+                    'transaksikredit' => 0,
+                ]);
+            }elseif($jenisnew == 'Kredit'){
+                DB::table('transaksis')->insert([
+                    'kodetransaksi' => $request->kodetransaksi,
+                    'tanggaltransaksi' => $request->tanggaltransaksi,
+                    'kdperkiraan' => $request->kdperkiraan,
+                    'keterangan' => $request->keterangan,
+                    'transaksidebit' => 0,
+                    'transaksikredit' => $request->nominal,
+                ]);
+            }
+            
+            return redirect()->route('IndexTransaksi')
+                        ->with('success','Data Telah Ditambahkan.');
+        } catch (QueryException $exception) {
+            return redirect()->route('IndexTransaksi')
+                        ->with('error','Data Telah Ditambahkan.');
+        }
     }
 
     /**
@@ -78,8 +130,11 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Transaksi $transaksi)
+    public function destroy(Transaksi $datatransaksi)
     {
-        //
+        $datatransaksi->delete();
+    
+        return redirect()->route('IndexTransaksi')
+                        ->with('success','Data Telah Dihapus.');
     }
 }

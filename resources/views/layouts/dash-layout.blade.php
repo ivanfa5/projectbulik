@@ -95,8 +95,8 @@
                     </span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./index.html" >
+                <li class="nav-item {{ (request()->is('transaksi*')) ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('IndexTransaksi') }}" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/checkbox -->
                       <svg width="24" height="24">
                         <use xlink:href="./icons/tabler-sprite.svg#tabler-playlist-add" />
