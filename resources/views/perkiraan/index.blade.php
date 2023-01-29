@@ -9,6 +9,7 @@
       Kode Perkiraan
     </h2>
   </div>
+  @can('isAdmin')
   <!-- Page title actions -->
   <div class="col-auto ms-auto d-print-none">
       <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-kodeperkiraan">
@@ -18,6 +19,7 @@
         Tambah Kode Perkiraan
       </a>
   </div>
+  @endcan
 </div>
 @endsection
 
@@ -27,6 +29,7 @@
 @endpush
 
 @section('content')
+@can('isAdmin')
 <div class="modal modal-blur fade" id="modal-kodeperkiraan" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -39,17 +42,18 @@
       <div class="modal-body">
         <div class="mb-3">
           <label class="form-label">Kode Perkiraan</label>
-          <input type="text" class="form-control" name="kodeperkiraan" id="kodeperkiraan" placeholder="Kode Perkiraan">
+          <input type="text" class="form-control" name="kodeperkiraan" id="kodeperkiraan" placeholder="Kode Perkiraan" required>
+          <small class="form-hint">Kode Perkiraan Haruslah Terdiri Dari 3 Buah Angka & Unik. Contoh: 110.</small>
         </div>
         <div class="mb-3">
           <label class="form-label">Nama Perkiraan</label>
-          <input type="text" class="form-control" name="namaperkiraan" id="namaperkiraan" placeholder="Nama Perkiraan">
+          <input type="text" class="form-control" name="namaperkiraan" id="namaperkiraan" placeholder="Nama Perkiraan" required>
         </div>
         <label class="form-label">Jenis Perkiran</label>
         <div class="form-selectgroup-boxes row mb-3">
           <div class="col-lg-6">
             <label class="form-selectgroup-item">
-              <input type="radio" name="jenisperkiraan" id="jenisperkiraan" value="debit" class="form-selectgroup-input">
+              <input type="radio" name="jenisperkiraan" id="jenisperkiraan" value="debit" class="form-selectgroup-input" required>
               <span class="form-selectgroup-label d-flex align-items-center p-3">
                 <span class="me-3">
                   <span class="form-selectgroup-check"></span>
@@ -95,6 +99,44 @@
     </div>
   </div>
 </div>
+@endcan
+
+@if ($message = Session::get('error'))
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <div class="d-flex">
+      <div class="p-2">
+        <span class="text-warning">
+        <svg width="24" height="24">
+          <use xlink:href="./icons/tabler-sprite.svg#tabler-alert-triangle" />
+        </svg>
+        </span>
+      </div>
+      <div>
+        <h4 class="alert-title">Terdapat Masalah! Data Tidak Dapat Disimpan.</h4>
+        <div class="text-muted">Harap Pastikan Semua Kolom Terisi dengan benar & Untuk Kode Perkiraan Haruslah Unik / Tidak Boleh Sama.</div>
+      </div>
+    </div>
+    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+  </div>
+@endif
+@if ($message = Session::get('success'))
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <div class="d-flex">
+      <div class="p-2">
+        <span class="text-success">
+        <svg width="24" height="24">
+          <use xlink:href="./icons/tabler-sprite.svg#tabler-checkbox" />
+        </svg>
+        </span>
+      </div>
+      <div>
+        <h4 class="alert-title">Sukses!</h4>
+        <div class="text-muted">Permintaan Data Berhasil Diproses.</div>
+      </div>
+    </div>
+    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+  </div>
+@endif
 
 <div class="card">
   <div class="table p-2">

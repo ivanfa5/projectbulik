@@ -28,7 +28,9 @@ final class PerkiraanTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()->showSearchInput(),
+            Header::make()
+                ->showToggleColumns()
+                ->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount(),
@@ -126,19 +128,19 @@ final class PerkiraanTable extends PowerGridComponent
                 ->sortable()
                 ->searchable()
                 ->makeInputText()
-                ->editOnClick(),
+                ->editOnClick(auth()->user()->role == 'admin'),
 
             Column::make('NAMA PERKIRAAN', 'namaperkiraan')
                 ->sortable()
                 ->searchable()
                 ->makeInputText()
-                ->editOnClick(),
+                ->editOnClick(auth()->user()->role == 'admin'),
 
             Column::make('JENIS PERKIRAAN', 'jenisperkiraan')
                 ->sortable()
                 ->searchable()
                 ->makeInputEnumSelect(\App\Enums\Perkiraan::cases(), 'jenisperkiraan')
-                ->editOnClick(),
+                ->editOnClick(auth()->user()->role == 'admin'),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()
@@ -170,20 +172,21 @@ final class PerkiraanTable extends PowerGridComponent
      public function actions(): array
      {
          return [
-             Button::add('edit')
-                 ->caption(__('<svg width="15" height="15">
-                 <use xlink:href="./icons/tabler-sprite.svg#tabler-edit" />
-               </svg>'))
-                 ->class('btn btn-primary')
-                 ->route('EditKodeperkiraan', ['perkiraan' => 'id']),
+            //  Button::add('edit')
+            //      ->caption(__('<svg width="15" height="15">
+            //      <use xlink:href="./icons/tabler-sprite.svg#tabler-edit" />
+            //    </svg>'))
+            //      ->class('btn btn-primary')
+            //      ->route('EditKodeperkiraan', ['dataperkiraan' => 'id']),
  
              Button::add('destroy')
                  ->caption(__('<svg width="15" height="15">
                  <use xlink:href="./icons/tabler-sprite.svg#tabler-trash" />
                </svg>'))
                  ->class('btn btn-danger')
-                 ->route('DestroyKodeperkiraan', ['perkiraan' => 'id'])
+                 ->route('DestroyKodeperkiraan', ['dataperkiraan' => 'id'])
                 ->method('delete')
+                ->target('_self'),
          ];
      }
 
@@ -203,18 +206,27 @@ final class PerkiraanTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
+    
     public function actionRules(): array
     {
        return [
 
+        //Hide edit & delete button if not admin. 
+        Rule::button('edit')
+            ->when(fn() => auth()->user()->role == 'user')
+            ->hide(),
+        
+        Rule::button('destroy')
+            ->when(fn() => auth()->user()->role == 'user')
+            ->hide(),
            //Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($perkiraan) => $perkiraan->id === 1)
-                ->hide(),
+            // Rule::button('edit')
+            //     ->when(fn($perkiraan) => $perkiraan->id === 1)
+            //     ->hide(),
         ];
     }
-    */
+    
+    // EDITONCLICK
     public bool $showErrorBag = true;
 
     public array $kodeperkiraan;

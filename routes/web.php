@@ -28,10 +28,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('kodeperkiraan', [PerkiraanController::class, 'index'])->name('IndexKodeperkiraan');
     Route::post('kodeperkiraan', [PerkiraanController::class, 'store'])->name('StoreKodeperkiraan');
     Route::get('kodeperkiraandefault', [PerkiraanController::class, 'storedefaul'])->name('StoreKodeperkiraanDef');
-    Route::delete('kodeperkiraan/{perkiraan}', [PerkiraanController::class, 'destroy'])->name('DestroyKodeperkiraan');
-    Route::get('kodeperkiraan/{perkiraan}/edit', [PerkiraanController::class, 'edit'])->name('EditKodeperkiraan');
+    Route::delete('kodeperkiraan/{dataperkiraan}', [PerkiraanController::class, 'destroy'])->name('DestroyKodeperkiraan');
+    Route::get('kodeperkiraan/{dataperkiraan}/edit', [PerkiraanController::class, 'edit'])->name('EditKodeperkiraan');
     // Route::get('kriteria/{datakriteria}/edit', 'KriteriaController@edit');
     Route::patch('kodeperkiraan/{dataperkiraan}', [PerkiraanController::class, 'update'])->name('UpdateKodeperkiraan');
+
+    //PUNYA KODE TRANSAKSI
+    Route::get('transaksi', [PerkiraanController::class, 'index'])->name('IndexTransaksi');
+    Route::post('transaksi', [PerkiraanController::class, 'store'])->name('StoreTransaksi');
+    Route::delete('transaksi/{perkiraan}', [PerkiraanController::class, 'destroy'])->name('DestroyTransaksi');
+    Route::get('transaksi/{perkiraan}/edit', [PerkiraanController::class, 'edit'])->name('EditTransaksi');
+    Route::patch('transaksi/{dataperkiraan}', [PerkiraanController::class, 'update'])->name('UpdateTransaksi');
 });
 
 Route::middleware('auth')->group(function () {

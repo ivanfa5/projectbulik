@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Perkiraan;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class PerkiraanController extends Controller
 {
@@ -35,16 +36,20 @@ class PerkiraanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'kodeperkiraan' => 'required',
-            'namaperkiraan' => 'required',
-            'jenisperkiraan' => 'required',
-        ]);
-    
-        Perkiraan::create($request->all());
-     
-        return redirect()->route('IndexKodeperkiraan')
+        try {
+            $request->validate([
+                'kodeperkiraan' => ['required', 'min:3', 'max:3'],
+                'namaperkiraan' => 'required',
+                'jenisperkiraan' => 'required',
+            ]);
+            Perkiraan::create($request->all());
+            
+            return redirect()->route('IndexKodeperkiraan')
                         ->with('success','Data Telah Ditambahkan.');
+        } catch (QueryException $exception) {
+            return redirect()->route('IndexKodeperkiraan')
+                        ->with('error','Data Telah Ditambahkan.');
+        }
     }
 
     /**
@@ -87,8 +92,11 @@ class PerkiraanController extends Controller
      * @param  \App\Models\Perkiraan  $perkiraan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Perkiraan $perkiraan)
+    public function destroy(Perkiraan $dataperkiraan)
     {
-        //
+        $dataperkiraan->delete();
+    
+        return redirect()->route('IndexKodeperkiraan')
+                        ->with('success','Data Telah Dihapus.');
     }
 }
