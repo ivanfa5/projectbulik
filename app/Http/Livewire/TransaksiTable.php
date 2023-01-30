@@ -186,7 +186,8 @@ final class TransaksiTable extends PowerGridComponent
                             <use xlink:href="./icons/tabler-sprite.svg#tabler-edit" />
                         </svg>'))
                 ->class('btn btn-primary')
-               ->route('EditTransaksi', ['datatransaksi' => 'id']),
+               ->route('EditTransaksi', ['datatransaksi' => 'id'])
+               ->target('_self'),
 
            Button::make('destroy', 'Delete')
                 ->caption(__('<svg width="15" height="15">

@@ -107,9 +107,28 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Transaksi $transaksi)
+    public function edit(Transaksi $datatransaksi)
     {
-        //
+        $pilihan = $datatransaksi->kdperkiraan;
+        $jenisold = Perkiraan::where('kodeperkiraan', $pilihan)
+                ->select('jenisperkiraan')
+                ->get();
+
+        foreach ($jenisold as $value) {
+            $jenisnew = $value->jenisperkiraan;
+        }
+        
+        if($jenisnew == 'Debit'){
+            $nominal = $datatransaksi->transaksidebit;
+        }elseif($jenisnew == 'Kredit'){
+            $nominal = $datatransaksi->transaksikredit;
+        }
+        $perkiraans = Perkiraan::all();
+        return view ('transaksi.edit', [
+            'datatransaksi'=>$datatransaksi,
+            'perkiraans'=>$perkiraans,
+            'nominal'=>$nominal,
+        ]);
     }
 
     /**
@@ -119,9 +138,50 @@ class TransaksiController extends Controller
      * @param  \App\Models\Transaksi  $transaksi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaksi $transaksi)
+    public function update(Request $request, Transaksi $datatransaksi)
     {
-        //
+        // $request->validate([
+        //         'kodetransaksi' => ['required', 'min:8', 'max:8'],
+        //         'tanggaltransaksi' => 'required',
+        //         'kdperkiraan' => 'required',
+        //         'keterangan ' => 'required',
+        //         'transaksidebit ' => 'required',
+        //         'transaksikredit ' => 'required',
+        // ]);
+    
+        $pilihan = $request->kdperkiraan;
+        $jenisold = Perkiraan::where('kodeperkiraan', $pilihan)
+                ->select('jenisperkiraan')
+                ->get();
+
+        foreach ($jenisold as $value) {
+            $jenisnew = $value->jenisperkiraan;
+        }
+        
+        if($jenisnew == 'Debit'){
+            Transaksi::where('id', $datatransaksi->id)->update([
+                'kodetransaksi' => $datatransaksi->kodetransaksi,
+                'tanggaltransaksi' => $request->tanggaltransaksi,
+                'kdperkiraan' => $request->kdperkiraan,
+                'keterangan' => $request->keterangan,
+                'transaksidebit' => $request->nominal,
+                'transaksikredit' => 0,
+            ]);
+        }elseif($jenisnew == 'Kredit'){
+            Transaksi::where('id', $datatransaksi->id)->update([
+                'kodetransaksi' => $datatransaksi->kodetransaksi,
+                'tanggaltransaksi' => $request->tanggaltransaksi,
+                'kdperkiraan' => $request->kdperkiraan,
+                'keterangan' => $request->keterangan,
+                'transaksidebit' => 0,
+                'transaksikredit' => $request->nominal,
+            ]);
+        }
+        // $datatransaksi->update($request->all());
+        // dd($datatransaksi);
+    
+        return redirect()->route('IndexTransaksi')
+                        ->with('success','Data Telah Diperbaharui.');
     }
 
     /**

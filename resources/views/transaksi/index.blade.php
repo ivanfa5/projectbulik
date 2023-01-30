@@ -42,7 +42,7 @@
       <div class="modal-body">
         <div class="mb-3">
           <label class="form-label">Kode Transaksi</label>
-          <input type="text" class="form-control" name="kodetransaksi" id="kodetransaksi" placeholder="Kode Perkiraan" value="{{ $code }}" required>
+          <input type="text" class="form-control" name="kodetransaksi" id="kodetransaksi" placeholder="Kode Transaksi" value="{{ $code }}" required>
           <small class="form-hint">Kode Transaksi Haruslah Terdiri Dari 8 Buah Karakter dengan format tahun, bulan, 4 angka & Unik. Contoh: T23011405.</small>
         </div>
         <div class="mb-3">

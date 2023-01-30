@@ -17,4 +17,8 @@ class Transaksi extends Model
         'transaksidebit',
         'transaksikredit',
     ];
+
+    public function panggilPerkiraan(){
+        return $this->hasOne(Perkiraan::class,'kodeperkiraan','kdperkiraan');    
+    }
 }
