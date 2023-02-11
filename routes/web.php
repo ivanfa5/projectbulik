@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PerkiraanController;
 use App\Http\Controllers\TransaksiController;
@@ -17,7 +18,8 @@ use App\Http\Controllers\TransaksiController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
+    // return view('welcome');
 });
 
 Route::get('/dashboard', function () {
@@ -40,6 +42,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('transaksi/{datatransaksi}', [TransaksiController::class, 'destroy'])->name('DestroyTransaksi');
     Route::get('transaksi/{datatransaksi}/edit', [TransaksiController::class, 'edit'])->name('EditTransaksi');
     Route::patch('transaksi/{datatransaksi}', [TransaksiController::class, 'update'])->name('UpdateTransaksi');
+    
+    //PUNYA LAPORAN
+    Route::get('laporan', [LaporanController::class, 'index'])->name('IndexLaporan');
+    Route::post('laporan', [LaporanController::class, 'store'])->name('StoreLaporan');
+    Route::delete('laporan/{datalaporan}', [LaporanController::class, 'destroy'])->name('DestroyLaporan');
+    Route::get('laporan/{datalaporan}/edit', [LaporanController::class, 'edit'])->name('EditLaporan');
+    Route::patch('laporan/{datalaporan}', [LaporanController::class, 'update'])->name('UpdateLaporan');
 });
 
 Route::middleware('auth')->group(function () {

@@ -107,8 +107,8 @@
                     </span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./index.html" >
+                <li class="nav-item {{ (request()->is('laporan*')) ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('IndexLaporan') }}" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                       <svg width="24" height="24">
                         <use xlink:href="./icons/tabler-sprite.svg#tabler-report-analytics" />
@@ -153,7 +153,7 @@
             <div class="row text-center align-items-center flex-row-reverse">
               <div class="col-lg-auto ms-lg-auto">
                 <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">Tema Oleh Tabler</a></li>
+                  <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary"></a></li>
                 </ul>
               </div>
               <div class="col-12 col-lg-auto mt-3 mt-lg-0">
