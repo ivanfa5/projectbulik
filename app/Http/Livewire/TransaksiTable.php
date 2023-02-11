@@ -12,6 +12,7 @@ use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Heade
 final class TransaksiTable extends PowerGridComponent
 {
     use ActionButton;
+    public string $sortDirection = 'desc';
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +98,9 @@ final class TransaksiTable extends PowerGridComponent
             ->addColumn('kdperkiraan')
             ->addColumn('keterangan')
             ->addColumn('transaksidebit')
-            ->addColumn('transaksikredit');
+            ->addColumn('RPtransaksidebit', fn (Transaksi $model) =>'Rp ' . number_format(e($model->transaksidebit), 0, ',', '.'))
+            ->addColumn('transaksikredit')
+            ->addColumn('RPtransaksikredit', fn (Transaksi $model) =>'Rp ' . number_format(e($model->transaksikredit), 0, ',', '.'));
             // ->addColumn('created_at_formatted', fn (Transaksi $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             // ->addColumn('updated_at_formatted', fn (Transaksi $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -130,7 +133,7 @@ final class TransaksiTable extends PowerGridComponent
             Column::make('TANGGAL TRANSAKSI', 'tanggaltransaksi_formatted', 'tanggaltransaksi')
                 ->searchable()
                 ->sortable()
-                ->makeInputDatePicker(),
+                ->makeInputDatePicker('tanggaltransaksi'),
 
             Column::make('PERKIRAAN', 'kdperkiraan')
                 ->sortable()
@@ -143,10 +146,10 @@ final class TransaksiTable extends PowerGridComponent
                 ->makeInputText()
                 ->editOnClick(auth()->user()->role == 'admin'),
 
-            Column::make('DEBIT', 'transaksidebit')
+            Column::make('DEBIT', 'RPtransaksidebit', 'transaksidebit')
                 ->makeInputRange(),
 
-            Column::make('KREDIT', 'transaksikredit')
+            Column::make('KREDIT', 'RPtransaksikredit','transaksikredit')
                 ->makeInputRange(),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')

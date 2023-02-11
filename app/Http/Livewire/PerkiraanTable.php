@@ -139,8 +139,7 @@ final class PerkiraanTable extends PowerGridComponent
             Column::make('JENIS PERKIRAAN', 'jenisperkiraan')
                 ->sortable()
                 ->searchable()
-                ->makeInputEnumSelect(\App\Enums\Perkiraan::cases(), 'jenisperkiraan')
-                ->editOnClick(auth()->user()->role == 'admin'),
+                ->makeInputEnumSelect(\App\Enums\Perkiraan::cases(), 'jenisperkiraan'),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()

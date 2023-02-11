@@ -12,7 +12,8 @@ use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Heade
 final class LaporanTable extends PowerGridComponent
 {
     use ActionButton;
-    public string $sortField = 'kdperkiraan';
+    public string $sortField = 'tanggaltransaksi';
+    public string $sortDirection = 'desc';
 
     /*
     |--------------------------------------------------------------------------
@@ -100,12 +101,9 @@ final class LaporanTable extends PowerGridComponent
             ->addColumn('kdperkiraan')
             ->addColumn('keterangan')
             ->addColumn('transaksidebit')
-            // ->addColumn('transaksidebit', function (Transaksi $datatransaksi) {
-            //     $debit = $datatransaksi->transaksidebit;
-
-            //     return 'Rp ' . number_format(e($debit), 2, ',', '.'); //R$ 1.000,00
-            // })
-            ->addColumn('transaksikredit');
+            ->addColumn('RPtransaksidebit', fn (Transaksi $model) =>'Rp ' . number_format(e($model->transaksidebit), 0, ',', '.'))
+            ->addColumn('transaksikredit')
+            ->addColumn('RPtransaksikredit', fn (Transaksi $model) =>'Rp ' . number_format(e($model->transaksikredit), 0, ',', '.'));
             // ->addColumn('created_at_formatted', fn (Transaksi $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             // ->addColumn('updated_at_formatted', fn (Transaksi $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -138,7 +136,7 @@ final class LaporanTable extends PowerGridComponent
             Column::make('TANGGALTRANSAKSI', 'tanggaltransaksi_formatted', 'tanggaltransaksi')
                 ->searchable()
                 ->sortable()
-                ->makeInputDatePicker(),
+                ->makeInputDatePicker('tanggaltransaksi'),
 
             Column::make('KDPERKIRAAN', 'kdperkiraan')
                 ->sortable()
@@ -150,13 +148,13 @@ final class LaporanTable extends PowerGridComponent
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('TRANSAKSIDEBIT', 'transaksidebit')
+            Column::make('DEBIT', 'RPtransaksidebit', 'transaksidebit')
                 ->makeInputRange()
-                ->withSum('Sum', true, true),
+                ->withSum('Total Rp', true, true),
 
-            Column::make('TRANSAKSIKREDIT', 'transaksikredit')
+            Column::make('KREDIT', 'RPtransaksikredit','transaksikredit')
                 ->makeInputRange()
-                ->withSum('Sum', true, true),
+                ->withSum('Total Rp', true, true),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()
