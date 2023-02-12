@@ -20,6 +20,7 @@
 
     <!-- CSS files -->
     <link href="./dist/css/tabler.min.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css"> --}}
     
     @stack('beforehead')
@@ -59,7 +60,7 @@
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="{{ route('profile.edit') }}" class="dropdown-item">Profile & account</a>
+                <a href="{{ route('profile.edit') }}" class="dropdown-item">Profilku</a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('logout') }}" type="submit" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
@@ -119,8 +120,9 @@
                     </span>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./index.html" >
+                @can('isAdmin')
+                <li class="nav-item {{ (request()->is('managemenakun*')) ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('IndexUsrman') }}" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/layout-2 -->
                       <svg width="24" height="24">
                         <use xlink:href="./icons/tabler-sprite.svg#tabler-users" />
@@ -131,6 +133,7 @@
                     </span>
                   </a>
                 </li>
+                @endcan
               </ul>
             </div>
           </div>

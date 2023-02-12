@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsrmanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PerkiraanController;
@@ -49,6 +50,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('laporan/{datalaporan}', [LaporanController::class, 'destroy'])->name('DestroyLaporan');
     Route::get('laporan/{datalaporan}/edit', [LaporanController::class, 'edit'])->name('EditLaporan');
     Route::patch('laporan/{datalaporan}', [LaporanController::class, 'update'])->name('UpdateLaporan');
+
+    //PUNYA USRMAN
+    Route::get('managemenakun', [UsrmanController::class, 'index'])->name('IndexUsrman');
+    Route::post('managemenakun', [UsrmanController::class, 'store'])->name('StoreUsrman');
+    Route::delete('managemenakun/{datausrman}', [UsrmanController::class, 'destroy'])->name('DestroyUsrman');
+    Route::get('managemenakun/{datausrman}/edit', [UsrmanController::class, 'edit'])->name('EditUsrman');
+    Route::patch('managemenakun/{datausrman}', [UsrmanController::class, 'update'])->name('UpdateUsrman');
 });
 
 Route::middleware('auth')->group(function () {
