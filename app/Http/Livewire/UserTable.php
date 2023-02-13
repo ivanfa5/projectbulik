@@ -119,7 +119,7 @@ final class UserTable extends PowerGridComponent
             // Column::make('ID', 'id')
             //     ->makeInputRange(),
 
-            Column::make('NAME', 'name')
+            Column::make('NAMA', 'name')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
@@ -129,7 +129,7 @@ final class UserTable extends PowerGridComponent
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('ROLE', 'role')
+            Column::make('STATUS', 'role')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),

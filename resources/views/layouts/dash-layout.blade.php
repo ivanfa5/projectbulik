@@ -38,7 +38,7 @@
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
-            <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+            {{-- <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
               <svg width="24" height="24">
                 <use xlink:href="./icons/tabler-sprite.svg#tabler-moon" />
               </svg>
@@ -48,7 +48,7 @@
               <svg width="24" height="24">
                 <use xlink:href="./icons/tabler-sprite.svg#tabler-sun" />
               </svg>
-            </a>
+            </a> --}}
             <div class="nav-item dropdown">
               <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                 <svg width="24" height="24">

@@ -128,17 +128,17 @@ final class LaporanTable extends PowerGridComponent
             // Column::make('ID', 'id')
             //     ->makeInputRange(),
 
-            Column::make('KODETRANSAKSI', 'kodetransaksi')
+            Column::make('KODE TRANSAKSI', 'kodetransaksi')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('TANGGALTRANSAKSI', 'tanggaltransaksi_formatted', 'tanggaltransaksi')
+            Column::make('TANGGAL TRANSAKSI', 'tanggaltransaksi_formatted', 'tanggaltransaksi')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker('tanggaltransaksi'),
 
-            Column::make('KDPERKIRAAN', 'kdperkiraan')
+            Column::make('KODE PERKIRAAN', 'kdperkiraan')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
