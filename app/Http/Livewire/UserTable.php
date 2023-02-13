@@ -31,7 +31,7 @@ final class UserTable extends PowerGridComponent
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(),
+                ->showRecordCount('short'),
         ];
     }
 

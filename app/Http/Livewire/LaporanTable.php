@@ -35,7 +35,7 @@ final class LaporanTable extends PowerGridComponent
                 ->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(),
+                ->showRecordCount('short'),
         ];
     }
 

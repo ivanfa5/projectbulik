@@ -33,7 +33,7 @@ final class PerkiraanTable extends PowerGridComponent
                 ->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(),
+                ->showRecordCount('short'),
         ];
     }
 

@@ -32,7 +32,7 @@ final class TransaksiTable extends PowerGridComponent
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
-                ->showRecordCount(),
+                ->showRecordCount('short'),
         ];
     }
 
