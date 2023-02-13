@@ -30,8 +30,8 @@
     </div>
   </div>
 
-  <br>
-  <div class="row row-cards">
+  {{-- <br> --}}
+  {{-- <div class="row row-cards">
   <div class="col-md-6 col-xl-3">
     <div class="card card-sm">
       <div class="card-body">
@@ -124,7 +124,7 @@
       </div>
     </div>
   </div>
-  </div>
+  </div> --}}
 
   <br>
   {{-- <div class="row align-items-center">
@@ -168,7 +168,7 @@
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
-            <a href="" class="btn btn-outline-primary w-100">
+            <a href="{{ route('IndexKodeperkiraan') }}" class="btn btn-outline-primary w-100">
               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
               Buka Halaman
             </a>
@@ -198,7 +198,7 @@
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
-            <a href="" class="btn btn-outline-primary w-100">
+            <a href="{{ route('IndexTransaksi') }}" class="btn btn-outline-primary w-100">
               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
               Buka Halaman
             </a>
@@ -228,7 +228,7 @@
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
-            <a href="" class="btn btn-outline-primary w-100">
+            <a href="{{ route('IndexLaporan') }}" class="btn btn-outline-primary w-100">
               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
               Buka Halaman
             </a>

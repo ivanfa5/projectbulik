@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsrmanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PerkiraanController;
 use App\Http\Controllers\TransaksiController;
 
@@ -23,11 +24,12 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboards.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboards.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     //PUNYA KODE PERKIRAAN
     Route::get('kodeperkiraan', [PerkiraanController::class, 'index'])->name('IndexKodeperkiraan');
     Route::post('kodeperkiraan', [PerkiraanController::class, 'store'])->name('StoreKodeperkiraan');
