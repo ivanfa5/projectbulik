@@ -52,11 +52,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('laporan/{datalaporan}', [LaporanController::class, 'update'])->name('UpdateLaporan');
 
     //PUNYA USRMAN
-    Route::get('managemenakun', [UsrmanController::class, 'index'])->name('IndexUsrman');
-    Route::post('managemenakun', [UsrmanController::class, 'store'])->name('StoreUsrman');
-    Route::delete('managemenakun/{datausrman}', [UsrmanController::class, 'destroy'])->name('DestroyUsrman');
-    Route::get('managemenakun/{datausrman}/edit', [UsrmanController::class, 'edit'])->name('EditUsrman');
-    Route::patch('managemenakun/{datausrman}', [UsrmanController::class, 'update'])->name('UpdateUsrman');
+    Route::get('managemenakun', [UsrmanController::class, 'index'])->name('IndexUsrman')->middleware('can:isAdmin');
+    Route::post('managemenakun', [UsrmanController::class, 'store'])->name('StoreUsrman')->middleware('can:isAdmin');
+    Route::delete('managemenakun/{datausrman}', [UsrmanController::class, 'destroy'])->name('DestroyUsrman')->middleware('can:isAdmin');
+    
 });
 
 Route::middleware('auth')->group(function () {
