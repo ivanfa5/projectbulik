@@ -47,8 +47,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('transaksi/{datatransaksi}', [TransaksiController::class, 'update'])->name('UpdateTransaksi');
     
     //PUNYA LAPORAN
-    Route::get('laporan', [LaporanController::class, 'index'])->name('IndexLaporan');
-    Route::post('laporan', [LaporanController::class, 'store'])->name('StoreLaporan');
+    // Route::get('laporan', [LaporanController::class, 'index'])->name('IndexLaporan');
+    Route::get('laporandetail', [LaporanController::class, 'indexdetail'])->name('IndexLaporandetail');
+    Route::get('laporangroup', [LaporanController::class, 'indexgroup'])->name('IndexLaporangroup');
+    Route::post('laporandetail', [LaporanController::class, 'olahdetail'])->name('OlahDetailLaporan');
+    Route::post('laporangroupdebit', [LaporanController::class, 'olahgroupdebit'])->name('OlahGroupDebitLaporan');
+    Route::post('laporangroupkredit', [LaporanController::class, 'olahgroupkredit'])->name('OlahGroupKreditLaporan');
     Route::delete('laporan/{datalaporan}', [LaporanController::class, 'destroy'])->name('DestroyLaporan');
     Route::get('laporan/{datalaporan}/edit', [LaporanController::class, 'edit'])->name('EditLaporan');
     Route::patch('laporan/{datalaporan}', [LaporanController::class, 'update'])->name('UpdateLaporan');

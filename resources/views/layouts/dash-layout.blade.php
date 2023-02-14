@@ -108,15 +108,27 @@
                     </span>
                   </a>
                 </li>
-                <li class="nav-item {{ (request()->is('laporan*')) ? 'active' : '' }}">
-                  <a class="nav-link" href="{{ route('IndexLaporan') }}" >
+                <li class="nav-item {{ (request()->is('laporandetail*')) ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('IndexLaporandetail') }}" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                       <svg width="24" height="24">
                         <use xlink:href="./icons/tabler-sprite.svg#tabler-report-analytics" />
                       </svg>
                     </span>
                     <span class="nav-link-title">
-                      Laporan
+                      Laporan Detail
+                    </span>
+                  </a>
+                </li>
+                <li class="nav-item {{ (request()->is('laporangroup*')) ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('IndexLaporangroup') }}" >
+                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                      <svg width="24" height="24">
+                        <use xlink:href="./icons/tabler-sprite.svg#tabler-report-analytics" />
+                      </svg>
+                    </span>
+                    <span class="nav-link-title">
+                      Laporan Group
                     </span>
                   </a>
                 </li>

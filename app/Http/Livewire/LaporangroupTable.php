@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Perkiraan;
+use App\Models\Laporangroup;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class PerkiraanTable extends PowerGridComponent
+final class LaporangroupTable extends PowerGridComponent
 {
     use ActionButton;
 
@@ -28,9 +28,7 @@ final class PerkiraanTable extends PowerGridComponent
             Exportable::make('export')
                 ->striped()
                 ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
-            Header::make()
-                ->showToggleColumns()
-                ->showSearchInput(),
+            Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
                 ->showRecordCount('short'),
@@ -48,11 +46,11 @@ final class PerkiraanTable extends PowerGridComponent
     /**
     * PowerGrid datasource.
     *
-    * @return Builder<\App\Models\Perkiraan>
+    * @return Builder<\App\Models\Laporangroup>
     */
     public function datasource(): Builder
     {
-        return Perkiraan::query();
+        return Laporangroup::query()->select('*')->where('totaldebit','!=','0');
     }
 
     /*
@@ -87,21 +85,22 @@ final class PerkiraanTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            // ->addColumn('id')
+            ->addColumn('id')
             ->addColumn('kodeperkiraan')
 
            /** Example of custom column using a closure **/
-            // ->addColumn('kodeperkiraan_lower', function (Perkiraan $model) {
-            //     return strtolower(e($model->kodeperkiraan));
-            // })
+            ->addColumn('kodeperkiraan_lower', function (Laporangroup $model) {
+                return strtolower(e($model->kodeperkiraan));
+            })
 
-            ->addColumn('namaperkiraan')
-            ->addColumn('jenisperkiraan');
-            // ->addColumn('jenisperkiraan', function (Perkiraan $perkiraan) {
-            //     return \App\Enums\Perkiraan::from($perkiraan->jenisperkiraan)->labels();
-            // });
-            // ->addColumn('created_at_formatted', fn (Perkiraan $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            // ->addColumn('updated_at_formatted', fn (Perkiraan $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('totaldebit')
+            ->addColumn('RPtotaldebit', fn (Laporangroup $model) =>'Rp ' . number_format(e($model->totaldebit), 0, ',', '.'))
+            ->addColumn('bulan', function (Laporangroup $lp) {
+                return \App\Enums\Laporan::from($lp->bulan)->labels();
+            })
+            ->addColumn('tahun')
+            ->addColumn('created_at_formatted', fn (Laporangroup $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (Laporangroup $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -127,19 +126,21 @@ final class PerkiraanTable extends PowerGridComponent
             Column::make('KODE PERKIRAAN', 'kodeperkiraan')
                 ->sortable()
                 ->searchable()
-                ->makeInputText()
-                ->editOnClick(auth()->user()->role == 'admin'),
+                ->makeInputText(),
 
-            Column::make('NAMA PERKIRAAN', 'namaperkiraan')
+            Column::make('TOTAL DEBIT', 'RPtotaldebit', 'totaldebit')
+                ->makeInputRange()
+                ->withSum('Total Rp', true, true),
+
+            Column::make('BULAN', 'bulan')
                 ->sortable()
                 ->searchable()
-                ->makeInputText()
-                ->editOnClick(auth()->user()->role == 'admin'),
+                ->makeInputEnumSelect(\App\Enums\Laporan::cases(), 'bulan'),
 
-            Column::make('JENIS PERKIRAAN', 'jenisperkiraan')
+            Column::make('TAHUN', 'tahun')
                 ->sortable()
                 ->searchable()
-                ->makeInputEnumSelect(\App\Enums\Laporan::cases(), 'jenisperkiraan'),
+                ->makeInputText(),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()
@@ -151,7 +152,8 @@ final class PerkiraanTable extends PowerGridComponent
             //     ->sortable()
             //     ->makeInputDatePicker(),
 
-        ];
+        ]
+;
     }
 
     /*
@@ -163,33 +165,26 @@ final class PerkiraanTable extends PowerGridComponent
     */
 
      /**
-     * PowerGrid Perkiraan Action Buttons.
+     * PowerGrid Laporangroup Action Buttons.
      *
      * @return array<int, Button>
      */
 
-     public function actions(): array
-     {
-         return [
-            //  Button::add('edit')
-            //      ->caption(__('<svg width="15" height="15">
-            //      <use xlink:href="./icons/tabler-sprite.svg#tabler-edit" />
-            //    </svg>'))
-            //      ->class('btn btn-primary')
-            //      ->route('EditKodeperkiraan', ['dataperkiraan' => 'id']),
- 
-             Button::add('destroy')
-                 ->caption(__('<svg width="15" height="15">
-                 <use xlink:href="./icons/tabler-sprite.svg#tabler-trash" />
-               </svg>'))
-                 ->class('btn btn-danger')
-                 ->route('DestroyKodeperkiraan', ['dataperkiraan' => 'id'])
-                ->method('delete')
-                ->target('_self'),
-         ];
-     }
+    /*
+    public function actions(): array
+    {
+       return [
+           Button::make('edit', 'Edit')
+               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->route('laporangroup.edit', ['laporangroup' => 'id']),
 
-    
+           Button::make('destroy', 'Delete')
+               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+               ->route('laporangroup.destroy', ['laporangroup' => 'id'])
+               ->method('delete')
+        ];
+    }
+    */
 
     /*
     |--------------------------------------------------------------------------
@@ -200,49 +195,21 @@ final class PerkiraanTable extends PowerGridComponent
     */
 
      /**
-     * PowerGrid Perkiraan Action Rules.
+     * PowerGrid Laporangroup Action Rules.
      *
      * @return array<int, RuleActions>
      */
 
-    
+    /*
     public function actionRules(): array
     {
        return [
 
-        //Hide edit & delete button if not admin. 
-        Rule::button('edit')
-            ->when(fn() => auth()->user()->role == 'user')
-            ->hide(),
-        
-        Rule::button('destroy')
-            ->when(fn() => auth()->user()->role == 'user')
-            ->hide(),
            //Hide button edit for ID 1
-            // Rule::button('edit')
-            //     ->when(fn($perkiraan) => $perkiraan->id === 1)
-            //     ->hide(),
+            Rule::button('edit')
+                ->when(fn($laporangroup) => $laporangroup->id === 1)
+                ->hide(),
         ];
     }
-    
-    // EDITONCLICK
-    public bool $showErrorBag = true;
-
-    public array $kodeperkiraan;
-    public array $namaperkiraan;
-    public array $jenisperkiraan;
-
-    protected array $rules = [
-        'kodeperkiraan.*' => ['required', 'min:3', 'max:3'],
-        'namaperkiraan.*' => ['required'],
-        'jenisperkiraan.*' => ['required'],
-   ];
-
-    public function onUpdatedEditable($id, $field, $value): void
-    {   
-        $this->validate();
-        Perkiraan::query()->find($id)->update([
-            $field => $value,
-        ]);
-    }
+    */
 }

@@ -6,7 +6,7 @@
   <div class="col">
     <!-- Page pre-title -->
     <h2 class="page-title">
-      Laporan
+      Laporan 
     </h2>
   </div>
   {{-- @can('isAdmin') --}}
@@ -137,13 +137,95 @@
     <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
   </div>
 @endif
-
-<div class="card">
-  <div class="table p-2">
-    <h2 class="page-pretitle">Group</h2>
-    @livewire('laporan-table')
+@if ($message = Session::get('berhasil'))
+  <div class="alert alert-success alert-dismissible" role="alert">
+    <div class="d-flex">
+      <div class="p-2">
+        <span class="text-success">
+        <svg width="24" height="24">
+          <use xlink:href="./icons/tabler-sprite.svg#tabler-checkbox" />
+        </svg>
+        </span>
+      </div>
+      <div>
+        <h4 class="alert-title">Sukses!</h4>
+        <div class="text-muted">Permintaan Data Berhasil Diproses. Hasil Ditampilkan Pada Tabel Terkait.</div>
+      </div>
+    </div>
+    <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
   </div>
+@endif
+
+<div class="row row-cards">
+  <div class="card col-12">
+    <div class="card-header">
+      <h4 class="card-title">Laporan Detail</h4>
+    </div>
+    <div class="card-body">
+      <form action="{{ route('OlahDetailLaporan') }}" method="POST">
+      @csrf
+      <div class="mb-6">
+        <label class="form-label">Pilih Periode Yang Ingin Ditampilkan</label>
+        <div class="row g-2">
+          {{-- <div class="col-3">
+          </div> --}}
+          <div class="col-6">
+            <select name="bulan" id="bulan" class="form-select">
+              <option value="" selected disabled>Bulan</option>
+              <option value="1">Januari</option>
+              <option value="2">Februari</option>
+              <option value="3">Maret</option>
+              <option value="4">April</option>
+              <option value="5">Mei</option>
+              <option value="6">Juni</option>
+              <option value="7">Juli</option>
+              <option value="8">Agustus</option>
+              <option value="9">September</option>
+              <option value="10">Oktober</option>
+              <option value="11">November</option>
+              <option value="12">Desember</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <select name="tahun" id="tahun" class="form-select">
+              <option value="" selected disabled>Tahun</option>
+              <option value="2029">2029</option>
+              <option value="2028">2028</option>
+              <option value="2027">2027</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+              <option value="2016">2016</option>
+              <option value="2015">2015</option>
+              <option value="2014">2014</option>
+              <option value="2013">2013</option>
+              <option value="2012">2012</option>
+              <option value="2011">2011</option>
+              <option value="2010">2010</option>
+            </select>
+          </div>
+          <div class="d-flex">
+            {{-- <a href="#" class="btn btn-link">Cancel</a> --}}
+            {{-- <button type="submit" class="btn btn-danger">Hapus Hasil</button> --}}
+            <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      @livewire('laporandetail-table')
+    </div>
+  </div> 
 </div>
+
 {{-- <div class="modal-backdrop fade show"></div> --}}
 @endsection
 
