@@ -9,17 +9,6 @@
       Laporan Group
     </h2>
   </div>
-  {{-- @can('isAdmin') --}}
-  <!-- Page title actions -->
-  {{-- <div class="col-auto ms-auto d-print-none">
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-kodeperkiraan">
-        <svg width="25" height="25" class="p-1">
-          <use xlink:href="./icons/tabler-sprite.svg#tabler-plus" />
-        </svg>
-        Tambah Kode Perkiraan
-      </a>
-  </div> --}}
-  {{-- @endcan --}}
 </div>
 @endsection
 
@@ -29,77 +18,6 @@
 @endpush
 
 @section('content')
-@can('isAdmin')
-<div class="modal modal-blur fade" id="modal-kodeperkiraan" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Tambah Kode Perkiraan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="{{ route('StoreKodeperkiraan') }}" method="POST">
-      @csrf
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Kode Perkiraan</label>
-          <input type="text" class="form-control" name="kodeperkiraan" id="kodeperkiraan" placeholder="Kode Perkiraan" required>
-          <small class="form-hint">Kode Perkiraan Haruslah Terdiri Dari 3 Buah Angka & Unik. Contoh: 110.</small>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Nama Perkiraan</label>
-          <input type="text" class="form-control" name="namaperkiraan" id="namaperkiraan" placeholder="Nama Perkiraan" required>
-        </div>
-        <label class="form-label">Jenis Perkiran</label>
-        <div class="form-selectgroup-boxes row mb-3">
-          <div class="col-lg-6">
-            <label class="form-selectgroup-item">
-              <input type="radio" name="jenisperkiraan" id="jenisperkiraan" value="debit" class="form-selectgroup-input" required>
-              <span class="form-selectgroup-label d-flex align-items-center p-3">
-                <span class="me-3">
-                  <span class="form-selectgroup-check"></span>
-                </span>
-                <span class="form-selectgroup-label-content">
-                  <span class="form-selectgroup-title strong mb-1">Debit</span>
-                  <span class="d-block text-muted">Semua transaksi yang berjenis Debit adalah transaksi yang diterima atau pemasukan</span>
-                </span>
-              </span>
-            </label>
-          </div>
-          <div class="col-lg-6">
-            <label class="form-selectgroup-item">
-              <input type="radio" name="jenisperkiraan" id="jenisperkiraan" value="kredit" class="form-selectgroup-input">
-              <span class="form-selectgroup-label d-flex align-items-center p-3">
-                <span class="me-3">
-                  <span class="form-selectgroup-check"></span>
-                </span>
-                <span class="form-selectgroup-label-content">
-                  <span class="form-selectgroup-title strong mb-1">Kredit</span>
-                  <span class="d-block text-muted">Semua transaksi yang berjenis Kredit adalah transaksi yang dibayar atau keluar</span>
-                </span>
-              </span>
-            </label>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">
-          <svg width="25" height="25" class="p-1">
-            <use xlink:href="./icons/tabler-sprite.svg#tabler-plus" />
-          </svg>
-          Simpan
-        </button>
-        {{-- <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-          <svg width="25" height="25" class="p-1">
-            <use xlink:href="./icons/tabler-sprite.svg#tabler-plus" />
-          </svg>
-          Tambah Kode Perkiraan
-        </a> --}}
-      </div>
-    </form>
-    </div>
-  </div>
-</div>
-@endcan
 
 @if ($message = Session::get('error'))
   <div class="alert alert-warning alert-dismissible" role="alert">
@@ -155,6 +73,22 @@
     <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
   </div>
 @endif
+<div class="alert alert-info alert-dismissible" role="alert">
+  <div class="d-flex">
+    <div class="p-2">
+      <span class="text-info">
+      <svg width="24" height="24">
+        <use xlink:href="./icons/tabler-sprite.svg#tabler-info-circle" />
+      </svg>
+      </span>
+    </div>
+    <div>
+      <h4 class="alert-title">Harap Mengolah Data Ulang Untuk Menyegarkan Data!</h4>
+      <div class="text-muted">Data Yang Tampil Mungkin Adalah Bekas Olah Data Sebelumnya Yang Tersimpan. Hiraukan Pesan Ini Jika Anda Baru Saja Mengolah Data.</div>
+    </div>
+  </div>
+  <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+</div>
 
 <div class="row row-cards">
   <div class="card col-12">
@@ -189,26 +123,9 @@
           <div class="col-6">
             <select name="tahun" id="tahun" class="form-select">
               <option value="" selected disabled>Tahun</option>
-              <option value="2029">2029</option>
-              <option value="2028">2028</option>
-              <option value="2027">2027</option>
-              <option value="2026">2026</option>
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
+              @for ($year=date('Y'); $year>=2020; $year--)
+                <option value="{{ $year }}">{{ $year }}</option>
+              @endfor
             </select>
           </div>
           <div class="d-flex">
@@ -260,26 +177,9 @@
           <div class="col-6">
             <select name="tahun" id="tahun" class="form-select">
               <option value="" selected disabled>Tahun</option>
-              <option value="2029">2029</option>
-              <option value="2028">2028</option>
-              <option value="2027">2027</option>
-              <option value="2026">2026</option>
-              <option value="2025">2025</option>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
+              @for ($year=date('Y'); $year>=2020; $year--)
+                <option value="{{ $year }}">{{ $year }}</option>
+              @endfor
             </select>
           </div>
           <div class="d-flex">
@@ -297,7 +197,32 @@
   </div> 
 </div>
 
-{{-- <div class="modal-backdrop fade show"></div> --}}
+<br>
+<div class="row row-cards">
+  <div class="card col-12">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-auto ms-auto d-print-none">
+        <h2 class="page-title">
+          Ingin Melihat Data Keseluruhan?
+        </h2>
+      </div>
+      <div class="col">
+        
+      </div>
+      <!-- Page title actions -->
+      <div class="col-auto ms-auto d-print-none">
+        <div class="btn-list">
+          <a href="{{ route('IndexLaporanmaster') }}" class="btn btn-outline-primary w-100">
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            Buka  Halaman Master Data Transaksi
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @push('beforebody')

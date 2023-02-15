@@ -131,6 +131,7 @@ final class LaporanTable extends PowerGridComponent
             Column::make('KODE TRANSAKSI', 'kodetransaksi')
                 ->sortable()
                 ->searchable()
+                ->withCount('Jumlah Data', true, true)
                 ->makeInputText(),
 
             Column::make('TANGGAL TRANSAKSI', 'tanggaltransaksi_formatted', 'tanggaltransaksi')

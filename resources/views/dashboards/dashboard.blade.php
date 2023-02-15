@@ -222,13 +222,13 @@
             Langkah Ketiga
           </div>
           <h2 class="page-title">
-            Lihat Laporan
+            Lihat Laporan Detail / Group
           </h2>
         </div>
         <!-- Page title actions -->
         <div class="col-auto ms-auto d-print-none">
           <div class="btn-list">
-            <a href="{{ route('IndexLaporan') }}" class="btn btn-outline-primary w-100">
+            <a href="{{ route('IndexLaporandetail') }}" class="btn btn-outline-primary w-100">
               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
               Buka Halaman
             </a>

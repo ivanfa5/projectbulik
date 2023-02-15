@@ -126,7 +126,8 @@ final class LaporangroupkreditTable extends PowerGridComponent
             Column::make('KODE PERKIRAAN', 'kodeperkiraan')
                 ->sortable()
                 ->searchable()
-                ->makeInputText(),
+                ->makeInputText()
+                ->withCount('Jumlah Data', true, true),
 
             Column::make('TOTAL KREDIT', 'RPtotalkredit', 'totalkredit')
                 ->makeInputRange()

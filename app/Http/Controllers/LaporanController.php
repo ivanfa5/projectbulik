@@ -16,6 +16,11 @@ class LaporanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexmaster()
+    {
+        return view('laporan.indexmaster');
+    }
+
     public function indexdetail()
     {
         return view('laporan.indexdetail');
