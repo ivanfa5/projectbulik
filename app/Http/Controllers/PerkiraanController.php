@@ -18,6 +18,14 @@ class PerkiraanController extends Controller
         return view('perkiraan.index');
     }
 
+    public function hapusalert(Perkiraan $dataperkiraan)
+    {
+        // dd($dataperkiraan);
+        return view ('perkiraan.edit', [
+            'dataperkiraan'=>$dataperkiraan,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

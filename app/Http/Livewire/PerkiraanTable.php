@@ -178,13 +178,13 @@ final class PerkiraanTable extends PowerGridComponent
             //      ->class('btn btn-primary')
             //      ->route('EditKodeperkiraan', ['dataperkiraan' => 'id']),
  
-             Button::add('destroy')
+             Button::add('edit')
                  ->caption(__('<svg width="15" height="15">
                  <use xlink:href="./icons/tabler-sprite.svg#tabler-trash" />
                </svg>'))
                  ->class('btn btn-danger')
-                 ->route('DestroyKodeperkiraan', ['dataperkiraan' => 'id'])
-                ->method('delete')
+                 ->route('HapusKodeperkiraan', ['dataperkiraan' => 'id'])
+                // ->method('delete')
                 ->target('_self'),
          ];
      }

@@ -84,7 +84,7 @@
     </div>
     <div>
       <h4 class="alert-title">Harap Mengolah Data Ulang Untuk Menyegarkan Data!</h4>
-      <div class="text-muted">Data Yang Tampil Mungkin Adalah Bekas Olah Data Sebelumnya Yang Tersimpan. Hiraukan Pesan Ini Jika Anda Baru Saja Mengolah Data.</div>
+      <div class="text-muted">Teliti Sebelum Menggunakan Halaman Ini. Data Yang Tampil Mungkin Adalah Bekas Olah Data Sebelumnya Yang Tersimpan. Hiraukan Pesan Ini Jika Anda Baru Saja Mengolah Data.</div>
     </div>
   </div>
   <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>

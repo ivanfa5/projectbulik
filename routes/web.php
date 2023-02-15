@@ -35,8 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('kodeperkiraan', [PerkiraanController::class, 'store'])->name('StoreKodeperkiraan');
     Route::get('kodeperkiraandefault', [PerkiraanController::class, 'storedefaul'])->name('StoreKodeperkiraanDef');
     Route::delete('kodeperkiraan/{dataperkiraan}', [PerkiraanController::class, 'destroy'])->name('DestroyKodeperkiraan');
-    Route::get('kodeperkiraan/{dataperkiraan}/edit', [PerkiraanController::class, 'edit'])->name('EditKodeperkiraan');
-    // Route::get('kriteria/{datakriteria}/edit', 'KriteriaController@edit');
+    Route::get('kodeperkiraan/{dataperkiraan}/hapusalert', [PerkiraanController::class, 'hapusalert'])->name('HapusKodeperkiraan');
     Route::patch('kodeperkiraan/{dataperkiraan}', [PerkiraanController::class, 'update'])->name('UpdateKodeperkiraan');
 
     //PUNYA KODE TRANSAKSI

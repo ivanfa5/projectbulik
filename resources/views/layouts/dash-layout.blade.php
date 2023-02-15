@@ -55,11 +55,13 @@
                   <use xlink:href="./icons/tabler-sprite.svg#tabler-user-circle" />
                 </svg>
                 <div class="d-none d-xl-block ps-2">
-                  <div class="mt-1 small text-muted">Halo!</div>
-                  <div>{{ Auth::user()->name }}</div>
+                  <div class="mt-1 small text-muted"></div>
+                  <div></div>
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <p class="dropdown-item">Halo! {{ Auth::user()->name }}</p>
+                <div class="dropdown-divider"></div>
                 <a href="{{ route('profile.edit') }}" class="dropdown-item">Profilku</a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('logout') }}" type="submit" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
