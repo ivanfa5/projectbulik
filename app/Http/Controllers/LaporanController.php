@@ -29,17 +29,16 @@ class LaporanController extends Controller
     public function olahdetail(Request $request)
     {
         $request->validate([
-            'bulan'=> 'required',
-            'tahun'=> 'required',
+            'tanggalawal'=> 'required',
+            'tanggalakhir'=> 'required',
         ]);
 
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
+        $tanggalawal = $request->tanggalawal;
+        $tanggalakhir = $request->tanggalakhir;
         
         $laporandetail = DB::table('transaksis')
             ->select('*')
-            ->where(DB::raw('MONTH(tanggaltransaksi)'), '=', $bulan, 'and')
-            ->where(DB::raw('YEAR(tanggaltransaksi)'), '=', $tahun)
+            ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
             ->get();
         // dd($laporandetail);
         Laporandetail::query()->truncate();
@@ -60,63 +59,36 @@ class LaporanController extends Controller
         return view('laporan.indexgroup');
     }
 
-    public function olahgroupdebit(Request $request)
+    public function olahgroup(Request $request)
     {
         $request->validate([
-            'bulan'=> 'required',
-            'tahun'=> 'required',
+            'tanggalawal'=> 'required',
+            'tanggalakhir'=> 'required',
         ]);
 
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
+        $tanggalawal = $request->tanggalawal;
+        $tanggalakhir = $request->tanggalakhir;
         
-        $laporangrup = DB::table('transaksis')
-            ->selectRaw('kdperkiraan, SUM(transaksidebit) AS TOTAL, MONTH(tanggaltransaksi) AS BULAN, YEAR(tanggaltransaksi) AS TAHUN')
-            ->where(DB::raw('MONTH(tanggaltransaksi)'), '=', $bulan, 'and')
-            ->where(DB::raw('YEAR(tanggaltransaksi)'), '=', $tahun)
-            ->groupBy('kdperkiraan', 'BULAN', 'TAHUN')
+        $laporangrupdebit = DB::table('transaksis')
+            ->selectRaw('kdperkiraan, SUM(transaksidebit) AS TOTAL')
+            ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
+            ->groupBy('kdperkiraan')
             ->get();
-        // dd($laporangrup);
+        $laporangrupkredit = DB::table('transaksis')
+            ->selectRaw('kdperkiraan, SUM(transaksikredit) AS TOTAL')
+            ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
+            ->groupBy('kdperkiraan')
+            ->get();
+        
         Laporangroup::query()->truncate();
-        for ($f = 0; $f < $laporangrup->count(); $f++){
-            // $nilaiakhirnya[$f] = array('kodenyaalter' =>$alternatifs[$f]->kodealternatif,
-            //                            'namanyaalter' =>$alternatifs[$f]->namaalternatif, 
-            //                            'nilaipreferensi' => $Preferensi[$f]); 
-            Laporangroup::create(['kodeperkiraan' =>$laporangrup[$f]->kdperkiraan,
-                                 'totaldebit' =>$laporangrup[$f]->TOTAL, 
-                                 'bulan' =>$laporangrup[$f]->BULAN, 
-                                 'tahun' => $laporangrup[$f]->TAHUN]); 
-        }
-
-        return redirect()->route('IndexLaporangroup')->with('berhasil','Data Telah Diperbaharui.');
-    }
-
-    public function olahgroupkredit(Request $request)
-    {
-        $request->validate([
-            'bulan'=> 'required',
-            'tahun'=> 'required',
-        ]);
-
-        $bulan = $request->bulan;
-        $tahun = $request->tahun;
-        
-        $laporangrup = DB::table('transaksis')
-            ->selectRaw('kdperkiraan, SUM(transaksikredit) AS TOTAL, MONTH(tanggaltransaksi) AS BULAN, YEAR(tanggaltransaksi) AS TAHUN')
-            ->where(DB::raw('MONTH(tanggaltransaksi)'), '=', $bulan, 'and')
-            ->where(DB::raw('YEAR(tanggaltransaksi)'), '=', $tahun)
-            ->groupBy('kdperkiraan', 'BULAN', 'TAHUN')
-            ->get();
-        // dd($laporangrup);
         Laporangroupkredit::query()->truncate();
-        for ($f = 0; $f < $laporangrup->count(); $f++){
-            // $nilaiakhirnya[$f] = array('kodenyaalter' =>$alternatifs[$f]->kodealternatif,
-            //                            'namanyaalter' =>$alternatifs[$f]->namaalternatif, 
-            //                            'nilaipreferensi' => $Preferensi[$f]); 
-            Laporangroupkredit::create(['kodeperkiraan' =>$laporangrup[$f]->kdperkiraan,
-                                 'totalkredit' =>$laporangrup[$f]->TOTAL, 
-                                 'bulan' =>$laporangrup[$f]->BULAN, 
-                                 'tahun' => $laporangrup[$f]->TAHUN]); 
+        for ($f = 0; $f < $laporangrupdebit->count(); $f++){
+            Laporangroup::create(['kodeperkiraan' =>$laporangrupdebit[$f]->kdperkiraan,
+                                 'totaldebit' =>$laporangrupdebit[$f]->TOTAL]); 
+        }
+        for ($f = 0; $f < $laporangrupkredit->count(); $f++){
+            Laporangroupkredit::create(['kodeperkiraan' =>$laporangrupkredit[$f]->kdperkiraan,
+                                 'totalkredit' =>$laporangrupkredit[$f]->TOTAL]); 
         }
 
         return redirect()->route('IndexLaporangroup')->with('berhasil','Data Telah Diperbaharui.');
@@ -183,8 +155,15 @@ class LaporanController extends Controller
      * @param  \App\Models\Laporan  $laporan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Laporan $laporan)
+    public function destroygroup()
     {
-        //
+        Laporangroup::query()->truncate();
+        Laporangroupkredit::query()->truncate();
+        return redirect()->route('IndexLaporangroup')->with('berhasil','Data Telah Diperbaharui.');
+    }
+    public function destroydetail(Laporan $laporan)
+    {
+        Laporandetail::query()->truncate();
+        return redirect()->route('IndexLaporandetail')->with('berhasil','Data Telah Diperbaharui.');
     }
 }

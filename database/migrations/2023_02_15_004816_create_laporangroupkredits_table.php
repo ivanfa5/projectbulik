@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('kodeperkiraan');
             $table->bigInteger('totalkredit');
-            $table->string('bulan');
-            $table->string('tahun');
             $table->timestamps();
         });
     }

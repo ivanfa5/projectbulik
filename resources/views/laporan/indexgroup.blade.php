@@ -83,7 +83,7 @@
       </span>
     </div>
     <div>
-      <h4 class="alert-title">Harap Mengolah Data Ulang Untuk Menyegarkan Data!</h4>
+      <h4 class="alert-title">Harap Bersihkan Data Terlebih Dahulu!</h4>
       <div class="text-muted">Teliti Sebelum Menggunakan Halaman Ini. Data Yang Tampil Mungkin Adalah Bekas Olah Data Sebelumnya Yang Tersimpan. Hiraukan Pesan Ini Jika Anda Baru Saja Mengolah Data.</div>
     </div>
   </div>
@@ -93,47 +93,54 @@
 <div class="row row-cards">
   <div class="card col-12">
     <div class="card-header">
-      <h4 class="card-title">Laporan Group Debit</h4>
+      <h3 class="card-title">Pilih Jangka Waktu</h3>
     </div>
+    <form action="{{ route('OlahGroupLaporan') }}" method="POST">
+    @csrf
     <div class="card-body">
-      <form action="{{ route('OlahGroupDebitLaporan') }}" method="POST">
-      @csrf
-      <div class="mb-6">
-        <label class="form-label">Pilih Periode Yang Ingin Ditampilkan</label>
-        <div class="row g-2">
-          {{-- <div class="col-3">
-          </div> --}}
-          <div class="col-6">
-            <select name="bulan" id="bulan" class="form-select">
-              <option value="" selected disabled>Bulan</option>
-              <option value="1">Januari</option>
-              <option value="2">Februari</option>
-              <option value="3">Maret</option>
-              <option value="4">April</option>
-              <option value="5">Mei</option>
-              <option value="6">Juni</option>
-              <option value="7">Juli</option>
-              <option value="8">Agustus</option>
-              <option value="9">September</option>
-              <option value="10">Oktober</option>
-              <option value="11">November</option>
-              <option value="12">Desember</option>
-            </select>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Dari Tanggal</label>
+            <div class="input-icon mb-2">
+              <input class="form-control " name="tanggalawal" id="tanggalawal" placeholder="Tanggal Transaksi" value="{{old('tanggalawal')}}">
+              <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><line x1="11" y1="15" x2="12" y2="15" /><line x1="12" y1="15" x2="12" y2="18" /></svg>
+              </span>
+            </div>
           </div>
-          <div class="col-6">
-            <select name="tahun" id="tahun" class="form-select">
-              <option value="" selected disabled>Tahun</option>
-              @for ($year=date('Y'); $year>=2020; $year--)
-                <option value="{{ $year }}">{{ $year }}</option>
-              @endfor
-            </select>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Sampai Tanggal</label>
+            <div class="input-icon mb-2">
+              <input class="form-control " name="tanggalakhir" id="tanggalakhir" placeholder="Tanggal Transaksi" value="{{old('tanggalakhir')}}">
+              <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><line x1="11" y1="15" x2="12" y2="15" /><line x1="12" y1="15" x2="12" y2="18" /></svg>
+              </span>
+            </div>
           </div>
-          <div class="d-flex">
-            <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
-          </div>
-        </form>
         </div>
       </div>
+    </div>
+
+    <!-- Card footer -->
+    <div class="card-footer">
+      <div class="d-flex">
+        <a href="./laporangroupclear" class="btn btn-ghost-danger">Bersihkan Data</a>
+        <button type="submit" class="btn btn-green ms-auto">Olah Data</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+<br>
+
+
+<div class="row row-cards">
+  <div class="card col-12">
+    <div class="card-header">
+      <h4 class="card-title">Laporan Group Debit</h4>
     </div>
     <div class="card-footer">
       @livewire('laporangroup-table')
@@ -146,46 +153,6 @@
   <div class="card col-12">
     <div class="card-header">
       <h4 class="card-title">Laporan Group Kredit</h4>
-    </div>
-    <div class="card-body">
-      <form action="{{ route('OlahGroupKreditLaporan') }}" method="POST">
-      @csrf
-      <div class="mb-6">
-        <label class="form-label">Pilih Periode Yang Ingin Ditampilkan</label>
-        <div class="row g-2">
-          {{-- <div class="col-3">
-          </div> --}}
-          <div class="col-6">
-            <select name="bulan" id="bulan" class="form-select">
-              <option value="" selected disabled>Bulan</option>
-              <option value="1">Januari</option>
-              <option value="2">Februari</option>
-              <option value="3">Maret</option>
-              <option value="4">April</option>
-              <option value="5">Mei</option>
-              <option value="6">Juni</option>
-              <option value="7">Juli</option>
-              <option value="8">Agustus</option>
-              <option value="9">September</option>
-              <option value="10">Oktober</option>
-              <option value="11">November</option>
-              <option value="12">Desember</option>
-            </select>
-          </div>
-          <div class="col-6">
-            <select name="tahun" id="tahun" class="form-select">
-              <option value="" selected disabled>Tahun</option>
-              @for ($year=date('Y'); $year>=2020; $year--)
-                <option value="{{ $year }}">{{ $year }}</option>
-              @endfor
-            </select>
-          </div>
-          <div class="d-flex">
-            <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
-          </div>
-        </form>
-        </div>
-      </div>
     </div>
     <div class="card-footer">
       @livewire('laporangroupkredit-table')
@@ -220,6 +187,36 @@
 </div>
 
 @endsection
+
+<script src="./dist/libs/litepicker/dist/litepicker.js"></script>
+<script>
+  // @formatter:on
+  document.addEventListener("DOMContentLoaded", function () {
+    window.Litepicker && (new Litepicker({
+      element: document.getElementById('tanggalawal'),
+      buttonText: {
+        previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>`,
+        nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>`,
+      },
+    }));
+  });
+</script>
+<script>
+  // @formatter:on
+  document.addEventListener("DOMContentLoaded", function () {
+    window.Litepicker && (new Litepicker({
+      element: document.getElementById('tanggalakhir'),
+      buttonText: {
+        previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>`,
+        nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>`,
+      },
+    }));
+  });
+</script>
 
 @push('beforebody')
   @livewireScripts

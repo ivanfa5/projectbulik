@@ -95,10 +95,6 @@ final class LaporangroupTable extends PowerGridComponent
 
             ->addColumn('totaldebit')
             ->addColumn('RPtotaldebit', fn (Laporangroup $model) =>'Rp ' . number_format(e($model->totaldebit), 0, ',', '.'))
-            ->addColumn('bulan', function (Laporangroup $lp) {
-                return \App\Enums\Laporan::from($lp->bulan)->labels();
-            })
-            ->addColumn('tahun')
             ->addColumn('created_at_formatted', fn (Laporangroup $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Laporangroup $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -132,16 +128,6 @@ final class LaporangroupTable extends PowerGridComponent
             Column::make('TOTAL DEBIT', 'RPtotaldebit', 'totaldebit')
                 ->makeInputRange()
                 ->withSum('Total Rp', true, true),
-
-            Column::make('BULAN', 'bulan')
-                ->sortable()
-                ->searchable()
-                ->makeInputEnumSelect(\App\Enums\Laporan::cases(), 'bulan'),
-
-            Column::make('TAHUN', 'tahun')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()

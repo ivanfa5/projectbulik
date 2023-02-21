@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('kodeperkiraan');
             $table->bigInteger('totaldebit');
-            $table->string('bulan');
-            $table->string('tahun');
             $table->timestamps();
         });
     }

@@ -51,11 +51,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('laporandetail', [LaporanController::class, 'indexdetail'])->name('IndexLaporandetail');
     Route::get('laporangroup', [LaporanController::class, 'indexgroup'])->name('IndexLaporangroup');
     Route::post('laporandetail', [LaporanController::class, 'olahdetail'])->name('OlahDetailLaporan');
-    Route::post('laporangroupdebit', [LaporanController::class, 'olahgroupdebit'])->name('OlahGroupDebitLaporan');
-    Route::post('laporangroupkredit', [LaporanController::class, 'olahgroupkredit'])->name('OlahGroupKreditLaporan');
-    Route::delete('laporan/{datalaporan}', [LaporanController::class, 'destroy'])->name('DestroyLaporan');
-    Route::get('laporan/{datalaporan}/edit', [LaporanController::class, 'edit'])->name('EditLaporan');
-    Route::patch('laporan/{datalaporan}', [LaporanController::class, 'update'])->name('UpdateLaporan');
+    Route::post('laporangroup', [LaporanController::class, 'olahgroup'])->name('OlahGroupLaporan');
+    Route::get('laporangroupclear', [LaporanController::class, 'destroygroup'])->name('DestroyLaporanGroup');   
+    Route::get('laporandetailclear', [LaporanController::class, 'destroydetail'])->name('DestroyLaporanGroup');   
 
     //PUNYA USRMAN
     Route::get('managemenakun', [UsrmanController::class, 'index'])->name('IndexUsrman')->middleware('can:isAdmin');
