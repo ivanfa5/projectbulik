@@ -86,12 +86,6 @@
           </svg>
           Simpan
         </button>
-        {{-- <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-          <svg width="25" height="25" class="p-1">
-            <use xlink:href="./icons/tabler-sprite.svg#tabler-plus" />
-          </svg>
-          Tambah Kode Perkiraan
-        </a> --}}
       </div>
     </form>
     </div>

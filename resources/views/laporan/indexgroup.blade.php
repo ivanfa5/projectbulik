@@ -129,8 +129,6 @@
             </select>
           </div>
           <div class="d-flex">
-            {{-- <a href="#" class="btn btn-link">Cancel</a> --}}
-            {{-- <button type="submit" class="btn btn-danger">Hapus Hasil</button> --}}
             <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
           </div>
         </form>
@@ -183,8 +181,6 @@
             </select>
           </div>
           <div class="d-flex">
-            {{-- <a href="#" class="btn btn-link">Cancel</a> --}}
-            {{-- <button type="submit" class="btn btn-danger">Hapus Hasil</button> --}}
             <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
           </div>
         </form>

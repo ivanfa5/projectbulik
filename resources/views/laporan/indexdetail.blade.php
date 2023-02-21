@@ -9,17 +9,6 @@
       Laporan Detail
     </h2>
   </div>
-  {{-- @can('isAdmin') --}}
-  <!-- Page title actions -->
-  {{-- <div class="col-auto ms-auto d-print-none">
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-kodeperkiraan">
-        <svg width="25" height="25" class="p-1">
-          <use xlink:href="./icons/tabler-sprite.svg#tabler-plus" />
-        </svg>
-        Tambah Kode Perkiraan
-      </a>
-  </div> --}}
-  {{-- @endcan --}}
 </div>
 @endsection
 
@@ -139,8 +128,6 @@
             </select>
           </div>
           <div class="d-flex">
-            {{-- <a href="#" class="btn btn-link">Cancel</a> --}}
-            {{-- <button type="submit" class="btn btn-danger">Hapus Hasil</button> --}}
             <button type="submit" class="btn btn-primary ms-auto">Olah Data</button>
           </div>
         </form>
