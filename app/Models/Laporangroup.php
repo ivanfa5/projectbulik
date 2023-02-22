@@ -11,8 +11,7 @@ class Laporangroup extends Model
 
     protected $fillable = [
         'kodeperkiraan',
+        'keterangan',
         'totaldebit',
-        'bulan',
-        'tahun',
     ];
 }

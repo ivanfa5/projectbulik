@@ -68,26 +68,31 @@ class LaporanController extends Controller
 
         $tanggalawal = $request->tanggalawal;
         $tanggalakhir = $request->tanggalakhir;
-        
+
         $laporangrupdebit = DB::table('transaksis')
-            ->selectRaw('kdperkiraan, SUM(transaksidebit) AS TOTAL')
+            ->selectRaw('transaksis.kdperkiraan, perkiraans.namaperkiraan, SUM(transaksis.transaksidebit) AS TOTAL')
+            ->join('perkiraans','transaksis.kdperkiraan', '=', 'perkiraans.kodeperkiraan')
             ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
-            ->groupBy('kdperkiraan')
-            ->get();
-        $laporangrupkredit = DB::table('transaksis')
-            ->selectRaw('kdperkiraan, SUM(transaksikredit) AS TOTAL')
-            ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
-            ->groupBy('kdperkiraan')
+            ->groupBy('transaksis.kdperkiraan', 'perkiraans.namaperkiraan')
             ->get();
         
+        $laporangrupkredit = DB::table('transaksis')
+            ->selectRaw('transaksis.kdperkiraan, perkiraans.namaperkiraan, SUM(transaksis.transaksikredit) AS TOTAL')
+            ->join('perkiraans','transaksis.kdperkiraan', '=', 'perkiraans.kodeperkiraan')
+            ->whereBetween('tanggaltransaksi', [$tanggalawal, $tanggalakhir])
+            ->groupBy('transaksis.kdperkiraan', 'perkiraans.namaperkiraan')
+            ->get();
+
         Laporangroup::query()->truncate();
         Laporangroupkredit::query()->truncate();
         for ($f = 0; $f < $laporangrupdebit->count(); $f++){
             Laporangroup::create(['kodeperkiraan' =>$laporangrupdebit[$f]->kdperkiraan,
+                                 'keterangan' =>$laporangrupdebit[$f]->namaperkiraan, 
                                  'totaldebit' =>$laporangrupdebit[$f]->TOTAL]); 
         }
         for ($f = 0; $f < $laporangrupkredit->count(); $f++){
             Laporangroupkredit::create(['kodeperkiraan' =>$laporangrupkredit[$f]->kdperkiraan,
+                                 'keterangan' =>$laporangrupkredit[$f]->namaperkiraan, 
                                  'totalkredit' =>$laporangrupkredit[$f]->TOTAL]); 
         }
 

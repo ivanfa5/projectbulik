@@ -11,8 +11,7 @@ class Laporangroupkredit extends Model
 
     protected $fillable = [
         'kodeperkiraan',
+        'keterangan',
         'totalkredit',
-        'bulan',
-        'tahun',
     ];
 }

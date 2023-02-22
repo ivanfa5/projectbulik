@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('laporangroupkredits', function (Blueprint $table) {
             $table->id();
             $table->string('kodeperkiraan');
+            $table->string('keterangan');
             $table->bigInteger('totalkredit');
             $table->timestamps();
         });

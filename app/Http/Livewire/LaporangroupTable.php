@@ -87,6 +87,7 @@ final class LaporangroupTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('kodeperkiraan')
+            ->addColumn('keterangan')
 
            /** Example of custom column using a closure **/
             ->addColumn('kodeperkiraan_lower', function (Laporangroup $model) {
@@ -124,6 +125,11 @@ final class LaporangroupTable extends PowerGridComponent
                 ->searchable()
                 ->makeInputText()
                 ->withCount('Jumlah Data', true, true),
+            
+            Column::make('KETERANGAN', 'keterangan')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
 
             Column::make('TOTAL DEBIT', 'RPtotaldebit', 'totaldebit')
                 ->makeInputRange()
