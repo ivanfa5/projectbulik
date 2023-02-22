@@ -4,6 +4,12 @@
 
 ### Install
 
+Clone this repository and enter the project's directory:
+
+```shell
+cd projectbulik
+```
+
 Install dependencies with Composer:
 
 ```shell
