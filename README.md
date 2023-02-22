@@ -47,10 +47,10 @@ php artisan key:generate
 
 ## Prepare your Database
 
-Run the migrations and seeders.
+Run the migrations.
 
 ```shell
-php artisan migrate
+php artisan migrate:fresh
 ```
 
 ## Access the Website
